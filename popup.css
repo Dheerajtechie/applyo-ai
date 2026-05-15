@@ -1,0 +1,27 @@
+body {
+  margin: 0;
+  padding: 0;
+  width: 260px;
+  background: #111827;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  padding: 20px;
+}
+
+h2 {
+  margin-top: 0;
+  font-size: 20px;
+}
+
+input[type="range"] {
+  width: 100%;
+}
+
+#speedValue {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+}
