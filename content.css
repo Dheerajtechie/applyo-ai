@@ -1,0 +1,33 @@
+#turbo-video-controller {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 999999;
+  background: rgba(0,0,0,0.8);
+  color: white;
+  padding: 10px 14px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: Arial, sans-serif;
+  backdrop-filter: blur(8px);
+}
+
+#turbo-video-controller button {
+  background: #ffffff;
+  color: black;
+  border: none;
+  border-radius: 8px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+#turbo-speed-label {
+  min-width: 50px;
+  text-align: center;
+  font-weight: bold;
+}
