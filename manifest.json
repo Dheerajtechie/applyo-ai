@@ -1,0 +1,35 @@
+{
+  "manifest_version": 3,
+  "name": "Turbo Video Speed Controller",
+  "version": "1.0.0",
+  "description": "Control HTML5 video speed on YouTube, Udemy, Coursera, Netflix and most websites using a popup, floating controller and shortcuts.",
+  "permissions": ["storage", "activeTab"],
+  "host_permissions": ["<all_urls>"],
+  "action": {
+    "default_title": "Turbo Video Speed",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ],
+  "commands": {
+    "increase-speed": {
+      "suggested_key": { "default": "Alt+Shift+Up" },
+      "description": "Increase video speed"
+    },
+    "decrease-speed": {
+      "suggested_key": { "default": "Alt+Shift+Down" },
+      "description": "Decrease video speed"
+    },
+    "reset-speed": {
+      "suggested_key": { "default": "Alt+Shift+R" },
+      "description": "Reset video speed"
+    }
+  }
+}
