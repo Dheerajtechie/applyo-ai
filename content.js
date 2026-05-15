@@ -1,22 +1,34 @@
 let currentSpeed = 2;
+let intervalId = null;
 
 function getVideos() {
   return document.querySelectorAll('video');
 }
 
+function safelySaveSpeed(speed) {
+  try {
+    if (chrome?.storage?.sync) {
+      chrome.storage.sync.set({ turboVideoSpeed: speed });
+    }
+  } catch (error) {
+    console.log('Extension context refreshed');
+  }
+}
+
 function applySpeed(speed) {
   currentSpeed = Math.max(0.25, Math.min(speed, 16));
 
-  getVideos().forEach(video => {
+  getVideos().forEach((video) => {
     video.playbackRate = currentSpeed;
   });
 
   const speedLabel = document.getElementById('turbo-speed-label');
+
   if (speedLabel) {
     speedLabel.textContent = `${currentSpeed.toFixed(2)}x`;
   }
 
-  chrome.storage.sync.set({ turboVideoSpeed: currentSpeed });
+  safelySaveSpeed(currentSpeed);
 }
 
 function createController() {
@@ -42,16 +54,33 @@ function createController() {
   });
 }
 
-chrome.storage.sync.get(['turboVideoSpeed'], (result) => {
-  if (result.turboVideoSpeed) {
-    currentSpeed = result.turboVideoSpeed;
+function initializeExtension() {
+  try {
+    chrome.storage.sync.get(['turboVideoSpeed'], (result) => {
+      if (chrome.runtime.lastError) {
+        console.log('Runtime refreshed');
+        return;
+      }
+
+      if (result.turboVideoSpeed) {
+        currentSpeed = result.turboVideoSpeed;
+      }
+
+      applySpeed(currentSpeed);
+      createController();
+    });
+  } catch (error) {
+    console.log('Extension reloaded');
   }
+}
 
-  applySpeed(currentSpeed);
-  createController();
-});
+initializeExtension();
 
-setInterval(() => {
+if (intervalId) {
+  clearInterval(intervalId);
+}
+
+intervalId = setInterval(() => {
   applySpeed(currentSpeed);
 }, 1500);
 
